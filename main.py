@@ -16,7 +16,7 @@ import traceback
 from telebot.apihelper import ApiException
 
 #<-----Tác Giả: Tran Anh Tuan--Box Tele: @sharesrctool--Vui Lòng Không Xoá Phần Này--->#
-API_BOT = '#token bot'
+API_BOT = '7165323948:AAGe59mWIO0IhabXkeXPUyBikXmYcMeaQj4'
 bot = telebot.TeleBot(API_BOT, parse_mode=None)
 
 user_balance = {}
@@ -27,7 +27,7 @@ user_bet_history = {}
 user_bets = {}
 
 #<-----Tác Giả: Tran Anh Tuan--Box Tele: @sharesrctool--Vui Lòng Không Xoá Phần Này--->#
-group_chat_id = #id chat
+group_chat_id = -4623617387
 
 def save_balance_to_file():
     with open("sodu.txt", "w") as f:
@@ -601,7 +601,7 @@ def chuyentien(message):
 #<-----Tác Giả: Tran Anh Tuan--Box Tele: @sharesrctool--Vui Lòng Không Xoá Phần Này--->#
 @bot.message_handler(commands=["ctien"])
 def set_balance(msg):
-  if msg.from_user.id == #id:
+  if msg.from_user.id == 6929210318:
     bot.reply_to(msg, """
 🔭Nhập user ID của thành viên🔨
         """)
@@ -652,7 +652,7 @@ def update_balance(msg):
 """
     bot.send_message(user_id, notification_message)
 
-    group_chat_id =  # Thay thế bằng ID thực sự của nhóm chat
+    group_chat_id =  -4623617387
     bot.send_message(chat_id=group_chat_id, text=notification_message
                      ) 
   except ValueError:
@@ -1780,18 +1780,36 @@ def load_session_from_file():
     global current_session
     try:
         with open("phien.txt", "r") as file:
-            current_session = int(file.read())
+            contents = file.read()
+            if contents.strip() == "":  # Check if file is empty
+                current_session = 1  # Default value if file is empty
+            else:
+                current_session = int(contents)
     except FileNotFoundError:
-        current_session = 1
+        current_session = 1  # Default value if file does not exist
+    except ValueError:
+        print("Error: Invalid data in phien.txt file")
+        current_session = 1  # Default value if data is invalid
 
 #<-----Tác Giả: Tran Anh Tuan--Box Tele: @sharesrctool--Vui Lòng Không Xoá Phần Này--->#
 # Hàm lưu lịch sử phiên vào file
 def save_session_history_to_file():
-    last_10_sessions = session_results[-10:]
-    display_last_10 = " ".join(
-        ["⚫️" if session == 'TAI' else "⚪️" for session in last_10_sessions])
-    with open("matphien.txt", "w") as file:
-        file.write(display_last_10)
+    if not threading.main_thread().is_alive():
+        last_10_sessions = session_results[-10:]  # Ví dụ, bạn có thể gán giá trị này
+        try:
+            bot2.set_chat_permissions(group_chat_id2, permissions)
+        except telebot.apihelper.ApiTelegramException as e:
+            print(f"Telegram API error: {e}")
+        display_last_10 = " ".join(
+            ["⚫️" if session == 'TAI' else "⚪️" for session in last_10_sessions])
+        with open("matphien.txt", "w") as file:
+            file.write(display_last_10)
+    else:
+        last_10_sessions = session_results[-10:]  # Ví dụ, bạn có thể gán giá trị này
+        display_last_10 = " ".join(
+            ["⚫️" if session == 'TAI' else "⚪️" for session in last_10_sessions])
+        with open("matphien.txt", "w") as file:
+            file.write(display_last_10)
 
 #<-----Tác Giả: Tran Anh Tuan--Box Tele: @sharesrctool--Vui Lòng Không Xoá Phần Này--->#
 # Hàm load lịch sử phiên từ file
@@ -1806,9 +1824,7 @@ def load_session_history_from_file():
             ]
     except FileNotFoundError:
         session_results = []
-
-
-group_chat_id2 = 
+group_chat_id2 = -1002611467986
 
 current_session = 1
 session_results = []
